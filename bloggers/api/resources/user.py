@@ -1,0 +1,2 @@
+def aaaa():
+    return 'OLA'
