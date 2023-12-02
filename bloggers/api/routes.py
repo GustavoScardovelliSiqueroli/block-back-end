@@ -1,10 +1,12 @@
-from flask import Blueprint
-# from .resources.user import aaaa
+from flask import Blueprint,request
+from .controllers.user_controller import UserController
 
-bp = Blueprint("bp", __name__, url_prefix="/")
-@bp.route('/', methods=['GET'])
+user = Blueprint("user", __name__, url_prefix="/user")
+@user.route('/register', methods=['POST'])
 def aaaaaa():
-    return 'teste'
+    resp = request.json
+    user_controller = UserController(resp)
+    return user_controller.register_user()
 
 def init_app(app):
-    app.register_blueprint(bp)
+    app.register_blueprint(user)
