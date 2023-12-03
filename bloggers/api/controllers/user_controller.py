@@ -4,13 +4,36 @@ class UserController():
     def __init__(self, resp):
         self.resp = resp
 
-    def register_user(self):
+    def register_user(self) -> dict:
+        """Registers the user that was passed if all conditions are met,
+          else returns the message according to the problem.
+        Returns:
+            dict: {message: Usuário cadastro com sucesso!}
+            dict: {message: message error}
+        """        
+        if not 'name' in self.resp and not 'email' in self.resp and not 'pwd' in self.resp:
+            return {'message': 'Todos os campos são obrigatórios!'}
         
-        name = self.resp['name']
-        email = self.resp['email']
-        pwd = self.resp['pwd']
+        user_name = self.resp['name']
 
-        UserService.add_user(name, email, pwd)
-        return "User registed with sucsses"
-    
+        user_pwd = self.resp['pwd']
+        msg_pwd = UserService.validation_pwd(user_pwd)
+        if not msg_pwd == user_pwd:
+            return {'message': msg_pwd}
+        
+        user_email = self.resp['email']
+        msg_email = UserService.validation_email(user_email)
+        if not msg_email == user_email:
+            return {'message': msg_email}
+        
+        print(UserService.find_user_by_email(user_email))
+
+        if UserService.find_user_by_email(user_email):
+            return{'message': 'Email ja registrado!'}
+        
+        try: 
+            UserService.add_user(user_name, user_email, user_pwd)
+            return {'message': 'Usuário registrado com sucesso!'}
+        except:
+            return {'message': 'Usuário não cadastrado, ERROR interno.'}  
     
