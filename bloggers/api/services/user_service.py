@@ -1,6 +1,8 @@
 from bloggers.ext.database import db
-from sqlalchemy import select
 from bloggers.api.models.user import User
+
+from sqlalchemy import select
+from werkzeug.security import generate_password_hash, check_password_hash
 from re import search, match
 
 class UserService():
@@ -81,6 +83,26 @@ class UserService():
             return bool(True)
         return bool(False)
     
+
+    def verify_pwd(email: str, pwd :str) -> dict:
+        """Verify user password and return the user id,
+        user name and user email if all of parameters is ok
+        or None 
+        Args:
+            email (str): the user email
+            pwd (str): the user password
+        Returns:
+            dict: {id, name, email}
+            None
+        """
+        user = UserService.find_user_by_email(email)
+        if user:
+            if check_password_hash(user.password, str(pwd)):
+                return {'id': user.id,
+                        'name': user.name,
+                        'email': user.email}
+        return None
+        
 
     def find_user_by_email(email: str) -> User:
         """Fynd user by email, if exist return user, if not, return None.

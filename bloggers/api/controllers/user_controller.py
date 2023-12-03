@@ -9,7 +9,7 @@ class UserController():
           else returns the message according to the problem.
         Returns:
             dict: {message: Usuário cadastro com sucesso!}
-            dict: {message: message error}
+            dict: {message: error message}
         """        
         if not 'name' in self.resp and not 'email' in self.resp and not 'pwd' in self.resp:
             return {'message': 'Todos os campos são obrigatórios!'}
@@ -37,3 +37,18 @@ class UserController():
         except:
             return {'message': 'Usuário não cadastrado, ERROR interno.'}  
     
+
+    def login_user(self) -> dict:
+        """return the user datas if user parameters is ok
+        or a message.
+        Returns:
+            dict: {id, email, name}
+            dict: {message: error message}
+        """
+        if not 'email' in self.resp and not 'pwd' in self.resp:
+            return {'message': 'Todos os campos são obrigatórios!'}
+        
+        resp = UserService.verify_pwd(self.resp['email'], self.resp['pwd'])
+        if resp:
+            return resp
+        return {'message': 'Email ou senha inválidos!'}
