@@ -1,13 +1,14 @@
+from typing import Any
 from bloggers.ext.database import db
 from bloggers.api.models.user import User
 
 from sqlalchemy import select
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from re import search, match
 
 class UserService():
 
-    def add_user(name: str, email: str, pwd: str) -> None:
+    def add_user(self, name: str, email: str, pwd: str) -> None:
         """Add a user in db
         Args: 
             name (str): name of user
@@ -26,7 +27,7 @@ class UserService():
             raise Exception("Error on add user in db")
 
 
-    def validation_pwd(pwd: str) -> str:
+    def validation_pwd(self, pwd: str) -> str:
         """Validates that the password meets all requirements
         Args:
             pwd (str): the user password
@@ -50,7 +51,7 @@ class UserService():
         return pwd
 
 
-    def validation_email(email: str) -> str:
+    def validation_email(self, email: str) -> str:
         """validates that the email meets all requirements
         Args:
             email (str): the user email
@@ -64,7 +65,7 @@ class UserService():
         return 'Email inválido!'
         
 
-    def validation_name(name: str) -> str:
+    def validation_name(self, name: str) -> str:
         """validates that the name meets all requirements
         Args:
             name (str): the user name
@@ -72,10 +73,10 @@ class UserService():
             str: name if true
             str: msg if error
         """
-        pass
+        return ''
 
 
-    def exemplo(txt: str) -> bool:
+    def exemplo(self, txt: str) -> bool:
         """Verifica se existe um texto de parâmetro
         return: True
         return: False"""
@@ -84,7 +85,7 @@ class UserService():
         return bool(False)
     
 
-    def verify_pwd(email: str, pwd :str) -> dict:
+    def verify_pwd(self, email: str, pwd :str) -> dict:
         """Verify user password and return the user id,
         user name and user email if all of parameters is ok
         or None 
@@ -95,29 +96,28 @@ class UserService():
             dict: {id, name, email}
             None
         """
-        user = UserService.find_user_by_email(email)
+        user = self.find_user_by_email(email)
         if user:
             if check_password_hash(user.password, str(pwd)):
                 return {'id': user.id,
                         'name': user.name,
                         'email': user.email}
-        return None
+        return dict()
         
 
-    def find_user_by_email(email: str) -> User:
+    def find_user_by_email(self, email: str) -> User | Any:
         """Fynd user by email, if exist return user, if not, return None.
         Args:
             email (str): the user email
         Returns:
             str: User
-            str: None
+            None
         """
-        stmt = select(User).where(User.email == str(email))
+        stmt = select(User).where(User.email == str(email)) # type: ignore
         result = db.session.execute(stmt).first()
         if result:
             user = ''
             for userr in result:
                 user = userr
-            return user
+            return user 
         return None
-    
