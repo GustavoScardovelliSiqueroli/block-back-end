@@ -3,12 +3,30 @@ from bloggers.ext.database import db
 from bloggers.api.models.user import User
 
 from sqlalchemy import select
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from re import search, match
+from datetime import date
+import uuid
 
 class UserService():
 
-    def add_user(self, name: str, email: str, pwd: str) -> None:
+
+    def create_user(self, name: str, email: str, pwd: str) -> User:
+        """create a user with name, email, pwd salt hash and created date.
+        Args:
+            name (str): the user name
+            email (str): the user email
+            pwd (str): the user password
+        Returns:
+            User: user created
+        """
+        user_id = uuid.uuid4.__str__()
+        user_createdat = date.today.__str__()
+        user_pwd = generate_password_hash(str(pwd), method='pbkdf2:sha1', salt_length=8)
+        return User(user_id, name, email, user_pwd, user_createdat)
+
+
+    def add_user(self, user: User) -> None:
         """Add a user in db
         Args: 
             name (str): name of user
@@ -18,7 +36,6 @@ class UserService():
             None
             raise Error
         """
-        user = User(name, email, pwd)
         try:
             db.session.add(user)
             db.session.commit()
@@ -105,7 +122,7 @@ class UserService():
         return dict()
         
 
-    def find_user_by_email(self, email: str) -> User | Any:
+    def find_user_by_email(self, email: str) -> User | None:
         """Fynd user by email, if exist return user, if not, return None.
         Args:
             email (str): the user email
@@ -119,5 +136,6 @@ class UserService():
             user = ''
             for userr in result:
                 user = userr
-            return user 
+            if user:
+                return user 
         return None

@@ -35,7 +35,7 @@ class UserController():
             return{'message': 'Email ja registrado!'}
         
         try: 
-            u_service.add_user(user_name, user_email, user_pwd)
+            u_service.add_user(u_service.create_user(user_name, user_email, user_pwd))
             return {'message': 'Usuário registrado com sucesso!'}
         except:
             return {'message': 'Usuário não cadastrado, ERROR interno.'}  

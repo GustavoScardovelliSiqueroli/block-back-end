@@ -1,7 +1,5 @@
 from bloggers.ext.database import db
 
-from werkzeug.security import generate_password_hash, check_password_hash
-import uuid
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -9,9 +7,20 @@ class User(db.Model):
     name = db.Column(db.String(86), nullable=False)
     email = db.Column(db.String(86), unique=True, nullable=False)
     password = db.Column(db.String(86), nullable=False)
+    createdat = db.Column(db.Date)
+    
 
-    def __init__(self, name: str, email: str, pwd: str):
-        self.id = uuid.uuid4()
+    def __init__(self, id: str,  name: str, email: str, pwd: str, createdat: str) -> None:
+        """A model for users of system
+        Args:
+            id (str): the user id
+            name (str): the user name
+            email (str): the user email
+            pwd (str): the user password
+            createdat (str): date that user was created
+        """
+        self.id = id
         self.name = name
         self.email = email
-        self.password = generate_password_hash(str(pwd), method='pbkdf2:sha1', salt_length=8)
+        self.password = pwd
+        self.createdat = createdat
