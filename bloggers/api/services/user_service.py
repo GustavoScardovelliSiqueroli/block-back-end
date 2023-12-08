@@ -20,8 +20,8 @@ class UserService():
         Returns:
             User: user created
         """
-        user_id = uuid.uuid4.__str__()
-        user_createdat = date.today.__str__()
+        user_id = uuid.uuid4().__str__()
+        user_createdat = date.today().__str__()
         user_pwd = generate_password_hash(str(pwd), method='pbkdf2:sha1', salt_length=8)
         return User(user_id, name, email, user_pwd, user_createdat)
 

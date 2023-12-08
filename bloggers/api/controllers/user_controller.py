@@ -33,13 +33,10 @@ class UserController():
 
         if u_service.find_user_by_email(user_email):
             return{'message': 'Email ja registrado!'}
-        
-        try: 
-            u_service.add_user(u_service.create_user(user_name, user_email, user_pwd))
-            return {'message': 'Usuário registrado com sucesso!'}
-        except:
-            return {'message': 'Usuário não cadastrado, ERROR interno.'}  
     
+        u_service.add_user(u_service.create_user(user_name, user_email, user_pwd))
+        return {'message': 'Usuário registrado com sucesso!'}
+        
 
     def login_user(self) -> dict:
         """return the user datas if user parameters is ok
