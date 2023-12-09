@@ -1,6 +1,4 @@
+def teste(**kwargs):
+    print(kwargs.get('teste'))
 
-from uuid import uuid4
-
-
-teste = uuid4().__str__()
-print(teste)
+teste(teste='oiii')

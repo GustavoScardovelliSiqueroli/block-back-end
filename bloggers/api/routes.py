@@ -1,8 +1,12 @@
 from flask import Blueprint,request
 from .controllers.user_controller import UserController
+from .controllers.posts_controller import PostController
 from bloggers.ext.cors import cross_origin
 
-user = Blueprint("user", __name__, url_prefix="/user")
+user = Blueprint('user', __name__, url_prefix='/user')
+posts = Blueprint('posts', __name__, url_prefix='/posts')
+
+# ROUTE - USER
 @user.route('/register', methods=['POST'])
 @cross_origin()
 def register_user():
@@ -17,5 +21,13 @@ def login_user():
     u_controller = UserController(resp)
     return u_controller.login_user()
 
+    
+# ROUTE - POSTS
+@posts.route('/register', methods=['POST'])
+def register_post():
+    pst_controller = PostController(request.json)   
+    return pst_controller.register_post() 
+
 def init_app(app):
     app.register_blueprint(user)
+    app.register_blueprint(posts)
