@@ -25,11 +25,11 @@ class Posts(db.Model):
             text (str): the post text
             createdat (date): the post created date
         """
-        self.idpost = idpost
-        self.iduser = iduser
+        self.idpost = idpost.__str__()
+        self.iduser = iduser.__str__()
         self.title = title        
-        self.createdat = createdat        
-        self.idsequence = idsequence        
+        self.createdat = createdat.__str__()    
+        self.idsequence = idsequence.__str__()        
         self.text = text        
         self.deletedat = None      
 

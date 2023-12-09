@@ -17,3 +17,10 @@ class PostController():
             return {'message': 'Post criado com sucesso!'}
         except:
             raise Exception('Error in register post')
+
+    def get_posts(self) -> dict:
+        pst_service = PostsService()
+        posts = pst_service.selecta_ll_posts()
+        if not posts:
+            return {'message': 'Sem posts para visualizar...'}
+        return posts

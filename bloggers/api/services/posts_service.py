@@ -1,8 +1,9 @@
-from cgitb import text
+from bloggers.ext.database import db
+from bloggers.api.models.post import Posts
+from sqlalchemy import select
+
 from datetime import date
 import uuid
-from bloggers.api.models.post import Posts
-from bloggers.ext.database import db
 
 class PostsService():
 
@@ -31,4 +32,28 @@ class PostsService():
         Returns:
             Posts: the post
         """
-        return Posts(uuid.uuid4().__str__(), iduser, title, date.today().__str__(), text=kwargs.get('text'), idsequence=kwargs.get('idsequence'))
+        return Posts(uuid.uuid4(), iduser, title, date.today(), text=kwargs.get('text'), idsequence=kwargs.get('idsequence'))
+
+    def selecta_ll_posts(self) -> dict | None:
+        try:
+            stmt = select(Posts)  
+            result = db.session.execute(stmt).all()
+           
+            if result:
+                post_list: list[dict] = []
+                for posts in result:
+                    for post in posts:
+                        postdict = {'idpost': post.idpost,
+                                    'iduser': post.iduser,
+                                    'title': post.title,
+                                    'text': post.text,
+                                    'createdat': post.createdat.__str__(),
+                                    'sequence': post.idsequence,
+                                    'deletedat': post.deletedat}
+                        post_list.append(postdict)
+                        print(post_list)
+                return {'posts': post_list} 
+            return None
+        except:
+            raise Exception('error in list posts')
+    

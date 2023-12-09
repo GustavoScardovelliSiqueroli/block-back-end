@@ -28,6 +28,12 @@ def register_post():
     pst_controller = PostController(request.json)   
     return pst_controller.register_post() 
 
+@posts.route('/', methods=['GET'])
+def get_posts():
+    pst_controller = PostController('')
+    return pst_controller.get_posts()
+
+
 def init_app(app):
     app.register_blueprint(user)
     app.register_blueprint(posts)
