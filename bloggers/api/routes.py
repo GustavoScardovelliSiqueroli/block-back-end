@@ -24,11 +24,13 @@ def login_user():
     
 # ROUTE - POSTS
 @posts.route('/register', methods=['POST'])
+@cross_origin()
 def register_post():
     pst_controller = PostController(request.json)   
     return pst_controller.register_post() 
 
 @posts.route('/', methods=['GET'])
+@cross_origin()
 def get_posts():
     pst_controller = PostController('')
     return pst_controller.get_posts()

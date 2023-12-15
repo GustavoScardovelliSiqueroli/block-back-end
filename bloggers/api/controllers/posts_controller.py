@@ -6,6 +6,15 @@ class PostController():
         self.req = req
 
     def register_post(self) -> dict:
+        """register a post in db
+
+        Raises:
+            Exception: error in register post on db
+
+        Returns:
+            dict: message: post criado com sucesso!
+            dict: message: todos os campos são obrigatórios!
+        """
         pst_service = PostsService()
         if not 'iduser' in self.req or not 'title' in self.req:
             return {'message': 'Todos os campos são obrigatórios!'}

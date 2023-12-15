@@ -34,7 +34,7 @@ class UserController():
         if u_service.find_user_by_email(user_email):
             return{'message': 'Email ja registrado!'}
     
-        u_service.add_user(u_service.create_user(user_name, user_email, user_pwd))
+        u_service.add_user(u_service.create_user(user_name, user_email, user_pwd, isadm=self.resp.get('isadm')))
         return {'message': 'Usuário registrado com sucesso!'}
         
 

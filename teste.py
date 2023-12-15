@@ -1,4 +1,2 @@
-def teste(**kwargs):
-    print(kwargs.get('teste'))
-
-teste(teste='oiii')
+teste = bool(None).__int__()
+print(teste)

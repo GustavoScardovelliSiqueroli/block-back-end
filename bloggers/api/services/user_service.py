@@ -11,7 +11,7 @@ import uuid
 class UserService():
 
 
-    def create_user(self, name: str, email: str, pwd: str) -> User:
+    def create_user(self, name: str, email: str, pwd: str, **kwargs) -> User:
         """create a user with name, email, pwd salt hash and created date.
         Args:
             name (str): the user name
@@ -23,7 +23,7 @@ class UserService():
         user_id = uuid.uuid4().__str__()
         user_createdat = date.today().__str__()
         user_pwd = generate_password_hash(str(pwd), method='pbkdf2:sha1', salt_length=8)
-        return User(user_id, name, email, user_pwd, user_createdat)
+        return User(user_id, name, email, user_pwd, user_createdat, kwargs.get('isadm'))
 
 
     def add_user(self, user: User) -> None:
@@ -118,7 +118,8 @@ class UserService():
             if check_password_hash(user.password, str(pwd)):
                 return {'id': user.id,
                         'name': user.name,
-                        'email': user.email}
+                        'email': user.email,
+                        'isadm': user.isadm}
         return dict()
         
 

@@ -51,7 +51,6 @@ class PostsService():
                                     'sequence': post.idsequence,
                                     'deletedat': post.deletedat}
                         post_list.append(postdict)
-                        print(post_list)
                 return {'posts': post_list} 
             return None
         except:
