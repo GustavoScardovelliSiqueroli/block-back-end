@@ -115,11 +115,14 @@ class UserService():
         """
         user = self.find_user_by_email(email)
         if user:
+            user_adm = 0
+            if user.isadm > 0:
+                user_adm = 1
             if check_password_hash(user.password, str(pwd)):
                 return {'id': user.id,
                         'name': user.name,
                         'email': user.email,
-                        'isadm': user.isadm}
+                        'isadm': user_adm}
         return dict()
         
 

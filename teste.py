@@ -1,2 +1,2 @@
-teste = bool(None).__int__()
+teste = bool((1)).__int__()
 print(teste)
