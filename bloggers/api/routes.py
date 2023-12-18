@@ -1,10 +1,12 @@
 from flask import Blueprint,request
 from .controllers.user_controller import UserController
 from .controllers.posts_controller import PostController
+from .controllers.post_contents_controller import PostContentsController
 from bloggers.ext.cors import cross_origin
 
 user = Blueprint('user', __name__, url_prefix='/user')
 posts = Blueprint('posts', __name__, url_prefix='/posts')
+postcontents = Blueprint('postcontents', __name__, url_prefix='/posts/contents')
 
 # ROUTE - USER
 @user.route('/register', methods=['POST'])
@@ -35,7 +37,14 @@ def get_posts():
     pst_controller = PostController('')
     return pst_controller.get_posts()
 
+# ROUTE - POTS/CONTENTS
+@postcontents.route('/teste', methods=['GET'])
+@cross_origin()
+def teste():
+    pst_cntnts_controller = PostContentsController('teste')
+    return pst_cntnts_controller.teste()
 
 def init_app(app):
     app.register_blueprint(user)
     app.register_blueprint(posts)
+    app.register_blueprint(postcontents)

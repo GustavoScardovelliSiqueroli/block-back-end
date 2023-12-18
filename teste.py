@@ -1,2 +1,3 @@
-teste = bool((1)).__int__()
+teste = ['teste','teste2']
 print(teste)
+print(type(teste))
