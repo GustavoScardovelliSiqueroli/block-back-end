@@ -116,8 +116,8 @@ class UserService():
         user = self.find_user_by_email(email)
         if user:
             user_adm = 0
-            if user.isadm > 0:
-                user_adm = 1
+            if user.isadm:
+                user_adm = user.isadm
             if check_password_hash(user.password, str(pwd)):
                 return {'id': user.id,
                         'name': user.name,
