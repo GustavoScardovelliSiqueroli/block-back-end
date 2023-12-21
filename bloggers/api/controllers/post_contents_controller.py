@@ -18,9 +18,9 @@ class PostContentsController():
         contets_return = [] 
         sequence = 0
         for content in contents:
-            sequence =+ 1
             post_content_created = pst_cntns_service.create_post_content(self.req['idpost'],
                  sequence, contenttext=content.get('text'), imagepath=content.get('imagepath'))
             pst_cntns_service.add_post_contents(post_content_created)
             contets_return.append(post_content_created)
+            sequence =+ 1
         return {'contents': contets_return}

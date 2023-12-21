@@ -9,7 +9,7 @@ class Posts(db.Model):
     __tablename__ = 'posts'
     idpost = db.Column(db.String(255), primary_key=True, nullable=False, unique=True)
     iduser = db.Column(db.String(255), ForeignKey('users.id'), nullable=False)
-    idsequence = db.Column(db.String(255), ForeignKey('posts.idpost'), nullable=True)
+    idsequence = db.Column(db.String(255), nullable=True)
     title = db.Column(db.String(100), nullable=False)
     text = db.Column(TEXT, nullable=True)
     createdat = db.Column(db.Date, nullable=False)

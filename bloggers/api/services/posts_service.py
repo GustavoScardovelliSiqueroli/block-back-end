@@ -17,7 +17,6 @@ class PostsService():
         try:
             db.session.add(post)
             db.session.commit()
-            db.session.close()
         except:
             raise Exception('Error in add post in db')
         
