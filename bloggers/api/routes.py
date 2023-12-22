@@ -37,12 +37,18 @@ def get_posts():
     pst_controller = PostController('')
     return pst_controller.get_posts()
 
-# ROUTE - POTS/CONTENTS
+# ROUTE - POSTS/CONTENTS
 @postcontents.route('/teste', methods=['GET'])
 @cross_origin()
 def teste():
     pst_cntnts_controller = PostContentsController('teste')
     return pst_cntnts_controller.teste()
+
+@postcontents.route('delete', methods=['GET'])
+@cross_origin()
+def delete_content():
+    pst_cntnts_controller = PostContentsController('teste')
+    return pst_cntnts_controller.delete_post_content()
 
 def init_app(app):
     app.register_blueprint(user)

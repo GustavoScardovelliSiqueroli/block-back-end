@@ -26,3 +26,12 @@ class PostContentsController():
             contets_return.append(post_content_created)
             sequence =+ 1
         return {'contents': contets_return}
+        
+    def delete_post_content(self) -> dict:
+        # if not 'idpostcontent' in self.req:
+        #     return {'message': 'idpostcontent not fount.'}
+        # if self.req['idpostcontent'] == '':
+        #     return {'message': 'idpostcontent not fount.'}
+
+        post_contents_service = PostContentsService()
+        return {'result': post_contents_service.delete_post_content('decc3a47-6ee1-4297-816f-ba91d556d9db')}
