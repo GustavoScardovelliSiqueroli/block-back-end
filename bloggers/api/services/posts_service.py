@@ -54,4 +54,9 @@ class PostsService():
             return None
         except:
             raise Exception('error in list posts')
-    
+
+    def delete_post(self, idpost) -> None:
+        stmt = delete(Posts).where(Posts.idpost == idpost) #type: ignore
+        db.session.execute(stmt)
+        db.session.commit()
+            

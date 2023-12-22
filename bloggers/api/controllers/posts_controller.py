@@ -47,3 +47,8 @@ class PostController():
         if not posts:
             return {'message': 'Sem posts para visualizar...'}
         return posts
+
+    def delete_post(self) -> dict:
+        pst_service = PostsService()
+        pst_service.delete_post(self.req.get('idpost'))
+        return {'message': 'post deletado'}

@@ -143,3 +143,10 @@ class UserService():
             if user:
                 return user 
         return None
+
+        
+    def delete_user(self, iduser) -> None:
+        stmt = delete(User).where(User.id == iduser) #type: ignore
+        db.session.execute(stmt)
+        db.session.commit()
+            

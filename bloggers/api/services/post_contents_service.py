@@ -18,9 +18,8 @@ class PostContentsService():
         return Postcontets(idpostcontent=uuid.uuid4(), idpost=idpost, sequence=sequence,
          contenttext=kwargs.get('contenttext'),imagepath=kwargs.get('imagepath'))
 
-    def delete_post_content(self, idpostcontent):
-        print(idpostcontent)
-        stmt = delete(Postcontets).where(Postcontets.idpostcontent == str('cd071cd7-a328-4adc-b844-8550050e9af5')) #type: ignore
+    def delete_post_content(self, idpostcontent) -> None:
+        stmt = delete(Postcontets).where(Postcontets.idpostcontent == idpostcontent) #type: ignore
         db.session.execute(stmt)
         db.session.commit()
-        return 'ok'
+        
