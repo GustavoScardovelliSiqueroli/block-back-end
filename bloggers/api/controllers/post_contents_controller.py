@@ -17,6 +17,8 @@ class PostContentsController():
         contents: list = self.req.get('contents')
         contets_return = [] 
         sequence = 0
+        if not contents:
+            return {'contents': ['']}
         for content in contents:
             post_content_created = pst_cntns_service.create_post_content(self.req['idpost'],
                  sequence, contenttext=content.get('text'), imagepath=content.get('imagepath'))
