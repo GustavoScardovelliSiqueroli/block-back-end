@@ -38,6 +38,20 @@ def get_posts():
     pst_controller = PostController('')
     return pst_controller.get_posts()
 
+@posts.route('/<idpost>', methods=['DELETE'])
+@cross_origin()
+def delete_post(idpost):
+    req = {'idpost': idpost}
+    pst_controller = PostController(req)
+    return pst_controller.delete_post()
+
+@posts.route('/<idpost>', methods=['GET'])
+@cross_origin()
+def get_post(idpost):
+    req = {'idpost': idpost}
+    pst_controller = PostController(req)
+    return pst_controller.get_post()
+
 # ROUTE - POSTS/CONTENTS
 @postcontents.route('/delete', methods=['GET'])
 @cross_origin()

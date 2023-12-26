@@ -49,6 +49,26 @@ class PostController():
         return posts
 
     def delete_post(self) -> dict:
+        if not 'idpost' in self.req:
+            return {'message': 'idpost not found.'}
+        if self.req.get('idpost') == '':
+            return {'message': 'idpost not found.'}
+        
         pst_service = PostsService()
-        pst_service.delete_post(self.req.get('idpost'))
-        return {'message': 'post deletado'}
+        try:
+            print('penis')
+            pst_service.delete_post(self.req.get('idpost'))
+            return {'message': 'post deletado'}
+        except:
+            return {'message': 'error in delete post'}
+
+    def get_post(self) -> dict:
+        pst_service = PostsService()
+        try:
+            post = pst_service.find_post(self.req.get('idpost'))
+            if post:
+                return {'post': post.to_dict()}
+            return {'message': 'post not found.'}
+        except:
+            return {'message': 'error in find post.'}    
+            

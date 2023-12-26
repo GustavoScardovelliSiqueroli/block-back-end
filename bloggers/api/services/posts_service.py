@@ -1,6 +1,7 @@
+from operator import pos
 from bloggers.ext.database import db
 from bloggers.api.models.post import Posts
-from sqlalchemy import select
+from sqlalchemy import select, delete
 
 from datetime import date
 import uuid
@@ -56,7 +57,19 @@ class PostsService():
             raise Exception('error in list posts')
 
     def delete_post(self, idpost) -> None:
-        stmt = delete(Posts).where(Posts.idpost == idpost) #type: ignore
-        db.session.execute(stmt)
-        db.session.commit()
-            
+        try:
+            stmt = delete(Posts).where(Posts.idpost == idpost) #type: ignore
+            db.session.execute(stmt)
+            db.session.commit()
+        except:
+            Exception('Error in delete post')        
+
+    def find_post(self, idpost) -> None | Posts:
+        try:
+            stmt = select(Posts).where(Posts.idpost == idpost)
+            result = db.session.execute(stmt).first()
+            if result:
+                post: Posts = result[0]
+                return post
+        except:
+            Exception('Error in find post')

@@ -33,3 +33,15 @@ class Posts(db.Model):
         self.text = text        
         self.deletedat = None      
 
+    def to_dict(self) -> dict:
+        return  {
+                    'idpost': self.idpost,
+                    'iduser': self.iduser,
+                    'title': self.title,         
+                    'createdat': self.createdat,    
+                    'idsequence': self.idsequence,        
+                    'text': self.text,         
+                    'deletedat': self.deletedat
+                }
+        
+
