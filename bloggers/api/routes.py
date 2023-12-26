@@ -1,3 +1,4 @@
+from re import escape
 from flask import Blueprint,request
 from .controllers.user_controller import UserController
 from .controllers.posts_controller import PostController
@@ -38,17 +39,15 @@ def get_posts():
     return pst_controller.get_posts()
 
 # ROUTE - POSTS/CONTENTS
-@postcontents.route('/teste', methods=['GET'])
-@cross_origin()
-def teste():
-    pst_cntnts_controller = PostContentsController('teste')
-    return pst_cntnts_controller.teste()
-
-@postcontents.route('delete', methods=['GET'])
+@postcontents.route('/delete', methods=['GET'])
 @cross_origin()
 def delete_content():
     pst_cntnts_controller = PostContentsController('teste')
     return pst_cntnts_controller.delete_post_content()
+
+@postcontents.route('/teste/<teste>', methods=['GET'])
+def teste(teste):
+    return f'teste: {escape(teste)}'
 
 def init_app(app):
     app.register_blueprint(user)
