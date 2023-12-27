@@ -73,6 +73,20 @@ def register_comments():
     cmnts_controller = CommentsController(request.json)
     return cmnts_controller.register_comments()
 
+@comments.route('/<idcomment>', methods=['DELETE'])
+@cross_origin()
+def delete_comment(idcomment):
+    req = {'idcomment': idcomment}
+    cmnts_controller = CommentsController(req)
+    return cmnts_controller.delete_comment()
+
+@comments.route('/',methods=['GET'])
+@cross_origin()
+def testesegund():
+    cmnts_controller = CommentsController('teste')
+    return cmnts_controller.update_comments()
+
+
 def init_app(app):
     app.register_blueprint(user)
     app.register_blueprint(posts)

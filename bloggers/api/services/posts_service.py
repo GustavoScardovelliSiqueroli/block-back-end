@@ -1,7 +1,7 @@
 from operator import pos
 from bloggers.ext.database import db
 from bloggers.api.models.post import Posts
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, update
 
 from datetime import date
 import uuid
@@ -74,3 +74,10 @@ class PostsService():
                 return post
         except:
             Exception('Error in find post')
+
+    def update_post(self, idpost) -> Posts:
+        stmt = update(Posts).where(Posts.idpost == idpost).values(title='testedeupdate')
+        print(db.session.execute(stmt))
+        print(db.session.commit())
+        
+
