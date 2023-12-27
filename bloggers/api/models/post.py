@@ -29,7 +29,7 @@ class Posts(db.Model):
         self.iduser = iduser.__str__()
         self.title = title        
         self.createdat = createdat.__str__()    
-        self.idsequence = idsequence.__str__()        
+        self.idsequence = idsequence  
         self.text = text        
         self.deletedat = None      
 

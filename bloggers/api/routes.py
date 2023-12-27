@@ -1,5 +1,7 @@
 from re import escape
 from flask import Blueprint,request
+
+from bloggers.api.controllers.comments_controller import CommentsController
 from .controllers.user_controller import UserController
 from .controllers.posts_controller import PostController
 from .controllers.post_contents_controller import PostContentsController
@@ -8,6 +10,7 @@ from bloggers.ext.cors import cross_origin
 user = Blueprint('user', __name__, url_prefix='/user')
 posts = Blueprint('posts', __name__, url_prefix='/posts')
 postcontents = Blueprint('postcontents', __name__, url_prefix='/posts/contents')
+comments = Blueprint('comments', __name__, url_prefix='/comments')
 
 # ROUTE - USER
 @user.route('/register', methods=['POST'])
@@ -63,7 +66,15 @@ def delete_content():
 def teste(teste):
     return f'teste: {escape(teste)}'
 
+# ROUTE - COMMENTS
+@comments.route('/register', methods=['POST'])
+@cross_origin()
+def register_comments():
+    cmnts_controller = CommentsController(request.json)
+    return cmnts_controller.register_comments()
+
 def init_app(app):
     app.register_blueprint(user)
     app.register_blueprint(posts)
     app.register_blueprint(postcontents)
+    app.register_blueprint(comments)

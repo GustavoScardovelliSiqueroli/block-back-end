@@ -15,6 +15,7 @@ class PostsService():
         Raises:
             Exception: ERROR IN ADD POST IN DB
         """
+        print(post.to_dict())
         try:
             db.session.add(post)
             db.session.commit()
